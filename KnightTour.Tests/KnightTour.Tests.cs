@@ -7,13 +7,14 @@ namespace KnightTour.Tests;
 public class Tests
 {
     private const int BoardSize = Consts.BorderSize;
+    private Square Origin = Square.Empty;
 
     [Test]
     public void Finder_Should_FindsTour()
     {
         IKnightTourFinder finder = new KnightTourFinder();
 
-        TourResult result = finder.FindTour(Square.Empty);
+        TourResult result = finder.FindTour(Origin);
 
         result.Success.ShouldBeTrue();
         result.Path.Count.ShouldBe(BoardSize * BoardSize);
@@ -24,7 +25,7 @@ public class Tests
     {
         IKnightTourFinder finder = new KnightTourFinder();
 
-        TourResult result = finder.FindTour(Square.Empty);
+        TourResult result = finder.FindTour(Origin);
 
         result.Success.ShouldBeTrue();
 
@@ -38,7 +39,7 @@ public class Tests
     {
         IKnightTourFinder finder = new KnightTourFinder();
 
-        TourResult result = finder.FindTour(Square.Empty);
+        TourResult result = finder.FindTour(Origin);
 
         result.Success.ShouldBeTrue();
 
@@ -54,15 +55,15 @@ public class Tests
     {
         IKnightTourFinder finder = new KnightTourFinder();
 
-        TourResult result = finder.FindTour(Square.Empty);
+        TourResult result = finder.FindTour(Origin);
 
         result.Success.ShouldBeTrue();
-        
+
         Square? previousSquare = default;
 
         foreach (var currentSquare in result.Path)
         {
-            if(previousSquare == null)
+            if (previousSquare == null)
             {
                 previousSquare = currentSquare;
                 continue;
@@ -81,23 +82,38 @@ public class Tests
     }
 
     [Test]
-    public void Finder_Should_Work_From_Different_Starting_Positions()
+    public void Tour_Should_Start_At_The_Given_Square()
+    {
+        IKnightTourFinder finder = new KnightTourFinder();
+        var start = Square.Point(4);
+
+        TourResult result = finder.FindTour(start);
+
+        result.Success.ShouldBeTrue();
+        result.Path.First().ShouldBe(start);
+    }
+
+    [Test]
+    public void Finder_Should_Work_From_All_64_Starting_Positions()
     {
         IKnightTourFinder finder = new KnightTourFinder();
 
-        var startingPoints = new[]
+        for (int row = 0; row < BoardSize; row++)
         {
-            Square.Empty,
-            Square.Point(3),
-            Square.Point(7)
-        };
+            for (int col = 0; col < BoardSize; col++)
+            {
+                var start = new Square(row, col);
+                var result = finder.FindTour(start);
 
-        foreach (var start in startingPoints)
-        {
-            var result = finder.FindTour(start);
-
-            result.Success.ShouldBeTrue();
-            result.Path.Count.ShouldBe(BoardSize * BoardSize);
+                result.Success.ShouldBeTrue(
+                    $"Expected a complete tour from ({row},{col}) but none was found.");
+                result.Path.Count.ShouldBe(
+                    BoardSize * BoardSize,
+                    $"Tour from ({row},{col}) has {result.Path.Count} moves, expected {BoardSize * BoardSize}.");
+                result.Path.First().ShouldBe(
+                    start,
+                    $"Tour from ({row},{col}) does not start at the given square.");
+            }
         }
     }
 }
