@@ -26,7 +26,9 @@ public class KnightTourFinder() : IKnightTourFinder
         /// Warnsdorff's rule: prefer moves with fewest onward options (lowest degree).
         var moves = current.GetKnightMoves()
             .Where(n => IsValid(n, visited))
-            .OrderBy(n => n.GetKnightMoves().Count(m => IsValid(m, visited)));
+            .OrderBy(n => n.GetKnightMoves().Count(m => IsValid(m, visited)))
+            .ThenBy(n => DistanceFromCentre(n)) // Suggested by Claude analzer
+            ;
  
         foreach (var next in moves)
         {
@@ -48,5 +50,12 @@ public class KnightTourFinder() : IKnightTourFinder
 
     private static bool IsComplete(IReadOnlyCollection<Square> path) =>
         path.Count == BoardSize * BoardSize;
+
+    //Suggested by Claude analyzer
+    // Returns the squared distance from the board's centre (3.5, 3.5).
+    // Multiplied by 4 to keep integer arithmetic; relative ordering is preserved.
+    private static int DistanceFromCentre(Square square) =>
+        (2 * square.Row - (BoardSize - 1)) * (2 * square.Row - (BoardSize - 1)) +
+        (2 * square.Column - (BoardSize - 1)) * (2 * square.Column - (BoardSize - 1));
 }
 

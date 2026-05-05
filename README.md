@@ -116,5 +116,5 @@ Tests are written against the interface, so the implementation can change withou
 
 Raw approach for backtracking proved to be pretty slow.
 
-A heuristic-based approach (Warnsdorff’s rule) seemed necessicity. So, it was adopted to produce a useable solution.
+A heuristic-based approach (Warnsdorff’s rule) seemed necessity. So, it was adopted to produce a useable solution.
 
