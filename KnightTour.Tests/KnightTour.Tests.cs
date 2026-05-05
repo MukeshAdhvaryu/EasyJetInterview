@@ -8,7 +8,7 @@ public class Tests
     private const int BoardSize = 8;
 
     [Test]
-    public void Finder_FindsTour()
+    public void Finder_Should_FindsTour()
     {
         IKnightTourFinder finder = new KnightTourFinder();
 
