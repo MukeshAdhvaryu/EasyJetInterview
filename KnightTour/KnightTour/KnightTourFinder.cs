@@ -1,12 +1,12 @@
-﻿using KnightTour.Extensions;
+﻿using KnightTour.Constants;
+using KnightTour.Extensions;
 using KnightTour.Models;
 
 namespace KnightTour;
 
-public class KnightTourFinder(Action<int>? OnStep = null) : IKnightTourFinder
+public class KnightTourFinder() : IKnightTourFinder
 {
-    private const int BoardSize = 8;
-    private int _calls = 0;
+    private const int BoardSize = Consts.BorderSize;
 
     public TourResult FindTour(Square start)
     {
@@ -23,32 +23,23 @@ public class KnightTourFinder(Action<int>? OnStep = null) : IKnightTourFinder
         if (IsComplete(path))
             return true;
 
-        //Sort moves by onward degree.
+        /// Warnsdorff's rule: prefer moves with fewest onward options (lowest degree).
         var moves = current.GetKnightMoves()
             .Where(n => IsValid(n, visited))
             .OrderBy(n => n.GetKnightMoves().Count(m => IsValid(m, visited)));
-
+ 
         foreach (var next in moves)
         {
-            _calls++;
-
-            if (OnStep != null &&_calls % 1_000_000 == 0)
-            {
-                OnStep(_calls);
-            }
-            if (!IsValid(next, visited))
-                continue;
-
             path.Add(next);
             visited.Add(next);
-
+ 
             if (TryFindTour(next, path, visited))
                 return true;
-
+ 
             path.RemoveAt(path.Count - 1);
             visited.Remove(next);
         }
-
+ 
         return false;
     }
 

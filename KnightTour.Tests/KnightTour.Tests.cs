@@ -1,18 +1,19 @@
-﻿using KnightTour.Models;
+﻿using KnightTour.Constants;
+using KnightTour.Models;
 using Shouldly;
 
 namespace KnightTour.Tests;
 
 public class Tests
 {
-    private const int BoardSize = 8;
+    private const int BoardSize = Consts.BorderSize;
 
     [Test]
     public void Finder_Should_FindsTour()
     {
         IKnightTourFinder finder = new KnightTourFinder();
 
-        TourResult result = finder.FindTour(new Square(0, 0));
+        TourResult result = finder.FindTour(Square.Empty);
 
         result.Success.ShouldBeTrue();
         result.Path.Count.ShouldBe(BoardSize * BoardSize);
@@ -23,7 +24,7 @@ public class Tests
     {
         IKnightTourFinder finder = new KnightTourFinder();
 
-        TourResult result = finder.FindTour(new Square(0, 0));
+        TourResult result = finder.FindTour(Square.Empty);
 
         result.Success.ShouldBeTrue();
 
@@ -37,7 +38,7 @@ public class Tests
     {
         IKnightTourFinder finder = new KnightTourFinder();
 
-        TourResult result = finder.FindTour(new Square(0, 0));
+        TourResult result = finder.FindTour(Square.Empty);
 
         result.Success.ShouldBeTrue();
 
@@ -53,7 +54,7 @@ public class Tests
     {
         IKnightTourFinder finder = new KnightTourFinder();
 
-        TourResult result = finder.FindTour(new Square(0, 0));
+        TourResult result = finder.FindTour(Square.Empty);
 
         result.Success.ShouldBeTrue();
         
@@ -74,6 +75,8 @@ public class Tests
                 (rowDiff == 1 && colDiff == 2);
 
             isValidMove.ShouldBeTrue();
+
+            previousSquare = currentSquare;
         }
     }
 
@@ -84,9 +87,9 @@ public class Tests
 
         var startingPoints = new[]
         {
-            new Square(0, 0),
-            new Square(3, 3),
-            new Square(7, 7)
+            Square.Empty,
+            Square.Point(3),
+            Square.Point(7)
         };
 
         foreach (var start in startingPoints)

@@ -111,3 +111,10 @@ The console app is just a thin wrapper to run the finder and print the result. T
 Tests are written against the interface, so the implementation can change without breaking them.
 
 ---
+
+## After design observations
+
+Raw approach for backtracking proved to be pretty slow.
+
+A heuristic-based approach (Warnsdorff’s rule) seemed necessicity. So, it was adopted to produce a useable solution.
+
