@@ -1,3 +1,8 @@
 <Solution>
-
+ <Folder Name="/KnightTour.Tests/">
+  <Project Path="KnightTour.Tests/KnightTour.Tests.csproj" />
+ </Folder>
+ <Folder Name="/KnightTour/">
+  <Project Path="KnightTour/KnightTour.csproj" />
+ </Folder>
 </Solution>
