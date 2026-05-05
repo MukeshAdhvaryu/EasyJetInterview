@@ -3,9 +3,10 @@ using KnightTour.Models;
 
 namespace KnightTour;
 
-public class KnightTourFinder : IKnightTourFinder
+public class KnightTourFinder(Action<int>? OnStep = null) : IKnightTourFinder
 {
     private const int BoardSize = 8;
+    private int _calls = 0;
 
     public TourResult FindTour(Square start)
     {
@@ -24,6 +25,12 @@ public class KnightTourFinder : IKnightTourFinder
 
         foreach (var next in current.GetKnightMoves())
         {
+            _calls++;
+
+            if (OnStep != null &&_calls % 1_000_000 == 0)
+            {
+                OnStep(_calls);
+            }
             if (!IsValid(next, visited))
                 continue;
 

@@ -1,10 +1,24 @@
-﻿using KnightTour;
+﻿using System.Diagnostics;
+
+using KnightTour;
 using KnightTour.Models;
 
 const int boardSize = 8;
 
-var finder = new KnightTourFinder();
+/*
+ * algorithm is pretty slow. needs to see how long it takes.
+ */ 
+Stopwatch stopwatch = new Stopwatch();
+
+var finder = new KnightTourFinder(step =>
+{
+    if (step % 100_000 == 0)
+    {
+        Console.WriteLine($"Steps: {step:N0} | Time: {stopwatch.ElapsedMilliseconds} ms");
+    }
+});;
 var start = new Square(0, 0);
+stopwatch.Start();
 
 var result = finder.FindTour(start);
 
