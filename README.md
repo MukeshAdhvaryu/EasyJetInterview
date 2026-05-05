@@ -96,3 +96,18 @@ Beyond that, I would defer additional abstraction (such as runtime strategy sele
 until there is a clear requirement.
 
 ---
+
+## Post planning: Design that derived from TDD - BDD approach
+
+The domain is intentionally small:
+
+* `Square` represents a position on the board
+* `TourResult` represents the outcome (success + path)
+* `IKnightTourFinder` defines the contract
+* `KnightTourFinder` implements it using backtracking
+
+The console app is just a thin wrapper to run the finder and print the result. There’s no logic in there beyond orchestration.
+
+Tests are written against the interface, so the implementation can change without breaking them.
+
+---
