@@ -5,6 +5,9 @@ public record Square (int Row, int Column)
     public static Square operator +(Square a, Square b) => 
         new Square(a.Row + b.Row, a.Column + b.Column);
 
+    public static Square Empty = new Square (0, 0);
+    public static Square Point(int point) => new Square(point, point);
+    
     private static readonly Square MoveOneByTwo = new(1, 2);
     private static readonly Square MoveTwoByOne = new(2, 1);
 
