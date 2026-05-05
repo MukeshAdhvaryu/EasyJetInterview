@@ -3,11 +3,6 @@ using KnightTour.Models;
 
 namespace KnightTour;
 
-using KnightTour.Extensions;
-using KnightTour.Models;
-
-namespace KnightTour;
-
 public class KnightTourFinder : IKnightTourFinder
 {
     private const int BoardSize = 8;
