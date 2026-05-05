@@ -1,7 +1,6 @@
-﻿using NUnit.Framework;
-using Shouldly;
+﻿using KnightTour.Models;
 
-using KnightTour;
+using Shouldly;
 
 namespace KnightTour.Tests;
 
@@ -15,8 +14,8 @@ public class Tests
     [Test]
     public void Finder_FindsTour()
     {
-        KnightTour.IKnightTourFinder finder = new KnightTour.KnightTourFinder();
-        var result = finder.FindTour(new Square(0, 0));
+        IKnightTourFinder finder = new KnightTourFinder();
+        TourResult result = finder.FindTour(new Square(0, 0));
 
         result.Success.ShouldBe(true);
         result.Path.Count.ShouldBe(64);
