@@ -1,7 +1,3 @@
-Here’s a rephrased version that keeps your intent clear and abstract—*without explicitly introducing interfaces*, but still implying those seams naturally:
-
----
-
 # **Knight's Tour (Knight’s Travel) Problem**
 
 ## Overview
