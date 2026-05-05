@@ -23,7 +23,12 @@ public class KnightTourFinder(Action<int>? OnStep = null) : IKnightTourFinder
         if (IsComplete(path))
             return true;
 
-        foreach (var next in current.GetKnightMoves())
+        //Sort moves by onward degree.
+        var moves = current.GetKnightMoves()
+            .Where(n => IsValid(n, visited))
+            .OrderBy(n => n.GetKnightMoves().Count(m => IsValid(m, visited)));
+
+        foreach (var next in moves)
         {
             _calls++;
 
